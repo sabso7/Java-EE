@@ -17,6 +17,10 @@
 						<th>brand</th>
 						<th>model</th>
 						<th>plateNumber</th>
+						<th>price</th>
+						<th>kms</th>
+						<th>cv</th>
+						<th>price</th>
 					</tr>
 				</thead>
 				<c:forEach items="${ cars }" var="car">
@@ -26,6 +30,10 @@
 							<td><c:out value="${ car.brand }" /></td>
 							<td><c:out value="${ car.model }" /></td>
 							<td><c:out value="${ car.plateNumber }" /></td>
+							<td><c:out value="${ car.price }" /></td>
+							<td><c:out value="${ car.kms }" /></td>
+							<td><c:out value="${ car.cv }" /></td>
+							<td><c:out value="${ car.color }" /></td>
 						</tr>
 					</tbody>
 				</c:forEach>

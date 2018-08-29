@@ -8,7 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 
 import com.campusnumerique.vehiclerental.entity.Car;
-import com.campusnumerique.vehiclerental.entity.Client;
+
 
 public class CarDAO extends DAO<Car>{
 
@@ -42,7 +42,7 @@ public class CarDAO extends DAO<Car>{
 		ArrayList<Car> cars = new ArrayList<Car>();
 		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM car");
 		while(result.next()){
-			Car car = new Car(result.getInt("id"),result.getString("brand"),result.getString("model"),result.getString("plateNumber"));
+			Car car = new Car(result.getInt("id"),result.getString("brand"), result.getString("model"), result.getString("plateNumber"), result.getString("color"), result.getInt("cv"),result.getInt("kms"),result.getDouble("price"));
 			cars.add(car);
 		}
 		return cars;
@@ -54,8 +54,11 @@ public class CarDAO extends DAO<Car>{
 		try {
 			result = this.connection.createStatement().executeQuery("SELECT * FROM car");
 			while(result.next()){
-	
-				Car car = new Car(result.getInt("id"),result.getString("brand"),result.getString("model"),result.getString("plateNumber"));    
+				
+				Car car = new Car(result.getInt("id"),result.getString("brand"), result.getString("model"), 
+						result.getString("plateNumber"), result.getString("color"), result.getInt("cv"),
+						result.getInt("kms"),result.getDouble("price"));
+				
 				cars.put(car.getInfos());
 			}
 		} catch (SQLException e) {

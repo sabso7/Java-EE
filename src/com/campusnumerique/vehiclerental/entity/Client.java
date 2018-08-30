@@ -1,5 +1,7 @@
 package com.campusnumerique.vehiclerental.entity;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
 public class Client {
@@ -9,6 +11,11 @@ public class Client {
 	private String firstName="";
 	private String lastName="";
 	private String mail="";
+	private String password="";
+	private Date birthDate;
+	private String numPermis="";
+	private Date datePermis;
+	
 	private boolean isGuest=false;
 	
 	public Client(){
@@ -16,12 +23,16 @@ public class Client {
 		setGuest(true);
 	}
 	
-	public Client(int id, String login, String firstName, String lastName, String mail){
+	public Client(int id, String login, String firstName, String lastName, String mail, String password, Date birthDate, String numPermis, Date datePermis){
 		setId(id);
 		setLogin(login);  
 		setFirstName(firstName);
 		setLastName(lastName);
 		setMail(mail);
+		setPassword(password);
+		setBirthDate(birthDate);
+		setNumPermis(numPermis);
+		setDatePermis(datePermis);
 		setGuest(false);
 	}
 	
@@ -32,6 +43,38 @@ public class Client {
 		if(login!=null && !login.equals(""))
 			this.login = login;
 	}
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getNumPermis() {
+		return numPermis;
+	}
+
+	public void setNumPermis(String numPermis) {
+		this.numPermis = numPermis;
+	}
+
+	public Date getDatePermis() {
+		return datePermis;
+	}
+
+	public void setDatePermis(Date datePermis) {
+		this.datePermis = datePermis;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -75,6 +118,12 @@ public class Client {
 		infos.put("lastName", lastName);
 		infos.put("mail", mail);
 		infos.put("isGuest", isGuest);
+		infos.put("password", password);
+		infos.put("birthDate", birthDate);
+		infos.put("numPermis", numPermis);
+		infos.put("datePermis", datePermis);
+		
+		
 		return infos;
 	}
 	

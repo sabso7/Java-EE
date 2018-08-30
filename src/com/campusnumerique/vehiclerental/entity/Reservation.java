@@ -1,15 +1,17 @@
 package com.campusnumerique.vehiclerental.entity;
 
+import java.util.Date;
+
 public class Reservation {
 
 	private int id;
 	private String client;
 	private String car;
-	private String startDate;
-	private String endDate;
+	private Date startDate;
+	private Date endDate;
 	private double price;
 	
-	public Reservation (int id , String client , String car , String startDate , String endDate , double price){
+	public Reservation (int id , String client , String car , Date startDate , Date endDate , double price){
 		
 		setId(id);
 		setClient(client);
@@ -35,11 +37,11 @@ public class Reservation {
 		this.client = client;
 	}
 
-	public String getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
@@ -51,11 +53,11 @@ public class Reservation {
 		this.car = car;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

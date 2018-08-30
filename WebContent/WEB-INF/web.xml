@@ -8,6 +8,7 @@
     <servlet-name>ClientServlet</servlet-name>
     <url-pattern>/clients</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <servlet-name>CarServlet</servlet-name>
     <servlet-class>com.campusnumerique.vehiclerental.servlet.car.CarServlet</servlet-class>
@@ -16,4 +17,14 @@
     <servlet-name>CarServlet</servlet-name>
     <url-pattern>/cars</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>ReservationServlet</servlet-name>
+    <servlet-class>com.campusnumerique.vehiclerental.servlet.reservation.ReservationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationServlet</servlet-name>
+    <url-pattern>/reservation</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

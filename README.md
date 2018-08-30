@@ -1,2 +1,2 @@
-# Java-EE
+# VehicleRental
 Vehicle Rental 

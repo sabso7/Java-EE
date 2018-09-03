@@ -43,14 +43,7 @@
 				<c:out value="${param.date}"/>
 
 </form>
-
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> a525089c8f9a2cf3f3bcb9245f2974214f75b2d6
-    
-    		
+   		
 </fieldset>
 
 

@@ -12,8 +12,12 @@
 
 <fieldset>
     <legend>Choose trip dates</legend>
+                	
+ <p>Bonjour<c:out value="${login}"/></p>
+				
+    
 
-<form methode ="post">
+<form method ="post">
 
    <div>
         <label for="startDate">Start</label>
@@ -37,8 +41,7 @@
 
 </form>
 
-   <c:if test="${ !empty startDate}"><p><c:out value="Bonjour, vous vous appelez ${ startDate }" /></p></c:if>
-   <c:if ><p>hello</p></c:else>
+  
     
     		
 </fieldset>

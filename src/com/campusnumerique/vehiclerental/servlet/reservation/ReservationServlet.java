@@ -56,7 +56,10 @@ public class ReservationServlet extends HttpServlet {
 //		reservation.setStartDate(startDate);
 //		reservation.setEndDate(endDate);
 //		reservation.setPrice(price);
+
+		String login = request.getParameter("login");
 		
+		request.setAttribute("login", login);
 	String startDate = request.getParameter("startDate");
 	request.setAttribute("startDate", startDate);
 	request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);

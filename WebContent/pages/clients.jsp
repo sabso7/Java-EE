@@ -14,16 +14,25 @@
 						<th>Login</th>
 						<th>First Name</th>
 						<th>Last Name</th>
+						<th>Reservation</th>
+						
 					</tr>
 				</thead>
 
 					<c:forEach items="${clients}" var="client">
 						<tbody>
 							<tr>
+							<td><c:out value="${ client.id}" /></td>
 								<td><c:out value="${ client.login }" /></td>
 								<td><c:out value="${ client.firstName }" /></td>
 								<td><c:out value="${ client.lastName }" /></td>
 								<td><c:out value="${ client.mail }" /></td>
+								
+								<td><form action="./reservation" method="post">
+									<input type="hidden"  value=" ${ client.firstName } ${ client.lastName }"  id="login" name="login"/>
+									<button>Rental</button>
+								</form>
+								</td>
 							</tr>
 						</tbody>
 					</c:forEach>

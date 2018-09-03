@@ -55,6 +55,7 @@ public class ReservationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+<<<<<<< HEAD
 	SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");	
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");		
 	Date startDate;
@@ -71,6 +72,21 @@ public class ReservationServlet extends HttpServlet {
 		
 	   	
 		
+=======
+//		Reservation reservation = new Reservation();
+//		reservation.setCar(car);
+//		reservation.setClient(client);
+//		reservation.setStartDate(startDate);
+//		reservation.setEndDate(endDate);
+//		reservation.setPrice(price);
+
+		String login = request.getParameter("login");
+		
+		request.setAttribute("login", login);
+	String startDate = request.getParameter("startDate");
+	request.setAttribute("startDate", startDate);
+	request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
+>>>>>>> a525089c8f9a2cf3f3bcb9245f2974214f75b2d6
 	
 		request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
 		

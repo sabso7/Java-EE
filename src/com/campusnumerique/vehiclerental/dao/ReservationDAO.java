@@ -10,7 +10,11 @@ public class ReservationDAO extends DAO<Reservation> {
 	
 	@Override
 	public boolean create(Reservation obj) {
-		// TODO Auto-generated method stub
+
+//		ResultSet result = this.connection.createStatement().executeQuery("INSERT INTO reservation() ")
+//		Reservation reservation = new Reservation();
+		
+
 		return false;
 	}
 

@@ -13,32 +13,34 @@
 <fieldset>
     <legend>Choose trip dates</legend>
 
-<form methode ="post">
+<form method ="post">
 
    <div>
         <label for="startDate">Start</label>
-        <input type="date" name="startDate" id="startDate" />
+        <input type="Date" name="startDate" id="startDate" />
     </div>
 
     <div>
         <label for="endDate">End</label>
-        <input type="date" name="endDate" id="endDate"  >
+        <input type="Date" name="endDate" id="endDate"  >
     </div>
     
     <label >Véhicules libres</label>
                 
-                <select class="form-control" required autofocus >    
-                	<c:forEach items="${ cars }" var="car">
+                <select type="car" class="form-control" required autofocus id="car" name="car" >    
+                	<c:forEach   items="${cars}" var="car">
                 		<option value="${car.brand} ${car.model}">${car.brand} ${car.model}</option>
 					</c:forEach> 
 				</select>
 				
 				<input type="submit" />
+				
+				<c:out value="${param.date}"/>
+				<c:out value="${param.date}"/>
 
 </form>
 
-   <c:if test="${ !empty startDate}"><p><c:out value="Bonjour, vous vous appelez ${ startDate }" /></p></c:if>
-   <c:if ><p>hello</p></c:else>
+
     
     		
 </fieldset>

@@ -17,7 +17,7 @@
 					</tr>
 				</thead>
 
-					<c:forEach items="${ clients }" var="client">
+					<c:forEach items="${clients}" var="client">
 						<tbody>
 							<tr>
 								<td><c:out value="${ client.login }" /></td>

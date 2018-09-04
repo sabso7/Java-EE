@@ -19,7 +19,7 @@
 					</tr>
 				</thead>
 
-					<c:forEach items="${ clients }" var="client">
+					<c:forEach items="${clients}" var="client">
 						<tbody>
 							<tr>
 							<td><c:out value="${ client.id}" /></td>
@@ -28,8 +28,8 @@
 								<td><c:out value="${ client.lastName }" /></td>
 								<td><c:out value="${ client.mail }" /></td>
 								
-								<td><form action="./reservation" method="post">
-									<input type="hidden"  value=" ${ client.firstName } ${ client.lastName }"  id="login" name="login"/>
+								<td><form action="./reservation" method="get">
+									<input type="hidden"  value="${ client.id }"  id="login" name="login"/>
 									<button>Rental</button>
 								</form>
 								</td>

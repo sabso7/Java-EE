@@ -5,19 +5,19 @@ import java.util.Date;
 public class Reservation {
 
 	private int id;
-	private String client;
-	private String car;
+	private int client;
+	private int car;
 	private Date startDate;
 	private Date endDate;
 	private double price;
 	
-	public Reservation (int id , String client , String car , Date startDate , Date endDate , double price){
+	public Reservation (int id , int i , int j , Date startDate , Date endDate , double price){
 		
 		setId(id);
-		setClient(client);
-		setCar(car);
+		setClient(i);
+		setCar(j);
 		setStartDate(startDate);
-		setStartDate(endDate);
+		setEndDate(endDate);
 		setPrice(price);
 	}
 
@@ -29,11 +29,11 @@ public class Reservation {
 		this.id = id;
 	}
 
-	public String getClient() {
+	public int getClient() {
 		return client;
 	}
 
-	public void setClient(String client) {
+	public void setClient(int client) {
 		this.client = client;
 	}
 
@@ -45,11 +45,11 @@ public class Reservation {
 		this.startDate = startDate;
 	}
 
-	public String getCar() {
+	public int getCar() {
 		return car;
 	}
 
-	public void setCar(String car) {
+	public void setCar(int car) {
 		this.car = car;
 	}
 

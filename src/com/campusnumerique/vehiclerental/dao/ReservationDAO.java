@@ -1,5 +1,6 @@
 package com.campusnumerique.vehiclerental.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import org.json.JSONArray;
@@ -10,7 +11,11 @@ public class ReservationDAO extends DAO<Reservation> {
 	
 	@Override
 	public boolean create(Reservation obj) {
-		// TODO Auto-generated method stub
+
+//		ResultSet result = this.connection.createStatement().executeQuery("INSERT INTO reservation() ")
+//		Reservation reservation = new Reservation();
+		
+
 		return false;
 	}
 
@@ -42,5 +47,12 @@ public class ReservationDAO extends DAO<Reservation> {
 	public JSONArray findAllAsJson(){
 	
 		return null;
+	}
+	
+	public Reservation findClient(int idClient) throws SQLException{
+		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM reservation WHERE clientReserv = " + idClient);
+		Reservation	reserv = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
+					result.getDate("startDate"),result.getDate("endDate"),result.getDouble("price"));
+		return reserv;	
 	}
 }

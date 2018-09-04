@@ -11,7 +11,6 @@ public class ControlReservation {
 		} 
 		return false;
 	}
-	
 	public boolean checkValReserv(Date ReservationEndDate, Date ReservationStartDate, Date clientStartDate, Date clientEndDate) {
 		if(between(ReservationEndDate, ReservationStartDate, clientStartDate)){
 			return false;

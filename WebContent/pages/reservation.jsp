@@ -47,7 +47,6 @@
 				<c:out value="${param.date}"/>
 
 </form>
- 		
 </fieldset>
 
 

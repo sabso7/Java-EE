@@ -1,5 +1,6 @@
 package com.campusnumerique.vehiclerental.control;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class ControlReservation {
@@ -23,4 +24,37 @@ public class ControlReservation {
 		}
 		return true;
 	}
+	
+	
+	public boolean CheckDate(Date birthDate, Date dValid) {
+		Date currentDate = new Date();
+		Calendar birthCalendar = Calendar.getInstance();
+		birthCalendar.setTime(birthDate);
+	    
+	    Calendar currentCalendar = Calendar.getInstance();
+	    currentCalendar.setTime(currentDate);
+		int years = currentCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR);
+		
+		if(years <18 ){
+			
+			return false;
+						
+		}
+		if(years >18 && years <21 ){
+			
+			return false; 
+			
+		}
+		if(years >21 && years <25 ){
+			
+			return false;
+					
+		}else{
+			
+			return true;
+		}
+				
+	}
+		
 }
+

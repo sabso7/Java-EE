@@ -38,7 +38,22 @@
 				</select>
 				
 				<input type="submit" />
-
+			
+				
+	<div><c:out value ="vous avez selectionné le véhicule suivant : ${car.brand} ${car.model} ${car.price}"/><br>
+		 <c:out value ="son prix au kilomètre est : ${car.kms}, son prix de location est de : ${car.price}"/>
+	</div>			
+	<div> 
+		<label for="TotalPrice">Estimez votre kilométrage</label>
+		<input type="number" name="kilometer" id="kilometer"/>	
+	</div>
+	
+	<div>
+		<c:out value ="Prix : ${car.brand} ${car.model} ${car.price}"/><br>
+		<c:out value ="son prix au kilomètre est : ${kms.price}"/>
+	</div>
+	
+	
 </form>
 
   

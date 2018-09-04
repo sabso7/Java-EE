@@ -17,7 +17,7 @@ public class Reservation {
 		setClient(i);
 		setCar(j);
 		setStartDate(startDate);
-		setStartDate(endDate);
+		setEndDate(endDate);
 		setPrice(price);
 	}
 

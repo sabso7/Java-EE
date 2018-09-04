@@ -50,8 +50,12 @@ public class ReservationDAO extends DAO<Reservation> {
 	}
 	
 	public Reservation findClient(int idClient) throws SQLException{
+		
 		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM reservation WHERE clientReserv = " + idClient);
-		Reservation	reserv = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
+		Reservation	reserv = null;
+		if(result.first())
+			
+		reserv = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
 					result.getDate("startDate"),result.getDate("endDate"),result.getDouble("price"));
 		return reserv;	
 	}

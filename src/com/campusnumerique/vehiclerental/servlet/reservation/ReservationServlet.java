@@ -25,32 +25,35 @@ import com.campusnumerique.vehiclerental.entity.Reservation;
 @WebServlet("/ReservationServlet")
 public class ReservationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 private CarDAO carDAO; 
-	 private ReservationDAO reservationDAO;
-	 private ControlReservation controlReservation ;
-	 private ClientDAO clientDAO;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ReservationServlet() {
-        super();
-        carDAO = new CarDAO();
-        clientDAO = new ClientDAO();
-        reservationDAO = new ReservationDAO();
-        controlReservation = new ControlReservation();
-    }
+	private CarDAO carDAO;
+	private ReservationDAO reservationDAO;
+	private ControlReservation controlReservation;
+	private ClientDAO clientDAO;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ReservationServlet() {
+		super();
+		carDAO = new CarDAO();
+		clientDAO = new ClientDAO();
+		reservationDAO = new ReservationDAO();
+		controlReservation = new ControlReservation();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		List<Car> cars;
 		try {
 			cars = carDAO.findAll();
 			request.setAttribute("cars", cars);
 			String login = request.getParameter("login");
 			int idClient = Integer.parseInt(login);
+			System.out.println(idClient);
 			Client clientCo = clientDAO.find(idClient);
 			System.out.println(clientCo);
 			request.setAttribute("client", clientCo);
-			request.getSession().setAttribute("login", login );
+			request.getSession().setAttribute("login", login);
 			request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -59,46 +62,54 @@ public class ReservationServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");	
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	Date startDate;
-	Date endDate;
-	String clientID;
-	try {
-		startDate = sdp.parse(request.getParameter("startDate"));
-		sdf.format(startDate);
-		endDate = sdp.parse( request.getParameter("endDate"));
-		sdf.format(endDate);
-		String car = request.getParameter("car");
-		int idClient = (int) request.getSession().getAttribute("login");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date newStartDateReserv;
+		Date newEndDateReserv;
+		Date startDateReserv;
+		Date endDateReserv;
+		boolean result;
+		int idClient;
+
 		try {
-			Reservation reserv =reservationDAO.findClient(idClient);
-			System.out.println(reserv);
-		} catch (SQLException e) {
+			newStartDateReserv = sdp.parse(request.getParameter("startDate"));
+			sdf.format(newStartDateReserv);
+			newEndDateReserv = sdp.parse(request.getParameter("endDate"));
+			sdf.format(newEndDateReserv);
+			String car = request.getParameter("car");
+			String login = request.getParameter("login");
+			idClient = Integer.parseInt(login);
+			System.out.println(idClient);
+			Reservation reserv;
+			try {
+				reserv = reservationDAO.findClient(idClient);
+				startDateReserv = reserv.getStartDate();
+				endDateReserv = reserv.getEndDate();
+				System.out.println(startDateReserv);
+				System.out.println(endDateReserv);
+				
+				result = controlReservation.checkValReserv(newEndDateReserv, newStartDateReserv,
+						startDateReserv, endDateReserv);
+				System.out.println(result);
+				request.setAttribute("login", login);
+				String startDate1 = request.getParameter("startDate");
+				request.setAttribute("startDate", startDate1);
+				request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(request.getSession().getAttribute("login"));
-		request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
-		System.out.println(startDate);
-		System.out.println(endDate);
-		System.out.println(car);
-		
-		String login = request.getParameter("login");
-		
-		request.setAttribute("login", login);
-	String startDate1 = request.getParameter("startDate");
-	request.setAttribute("startDate", startDate1);
-	request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
-	
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
 
 	}
 }

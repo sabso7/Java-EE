@@ -67,8 +67,7 @@ public class ClientServlet extends HttpServlet {
 		doGet(request, response);
 		
 
-		String login = request.getParameter("login");
-		
+		String login = request.getParameter("login");		
 		request.setAttribute("login", login);
 		request.getRequestDispatcher("./reservation.jsp").forward(request, response);
 				

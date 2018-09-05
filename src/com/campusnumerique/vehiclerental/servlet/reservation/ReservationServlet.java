@@ -49,7 +49,6 @@ public class ReservationServlet extends HttpServlet {
 			request.setAttribute("cars", cars);
 			String login = request.getParameter("login");
 			int idClient = Integer.parseInt(login);
-			System.out.println(idClient);
 			Client clientCo = clientDAO.find(idClient);
 			System.out.println(clientCo);
 			request.setAttribute("client", clientCo);
@@ -74,8 +73,9 @@ public class ReservationServlet extends HttpServlet {
 		Date newEndDateReserv;
 		Date startDateReserv;
 		Date endDateReserv;
-		boolean result;
+		List<Car> result;
 		int idClient;
+		boolean resultCheckReserv;
 
 		try {
 			newStartDateReserv = sdp.parse(request.getParameter("startDate"));
@@ -84,23 +84,29 @@ public class ReservationServlet extends HttpServlet {
 			sdf.format(newEndDateReserv);
 			String car = request.getParameter("car");
 			String login = request.getParameter("login");
-			idClient = Integer.parseInt(login);
-			System.out.println(idClient);
-			Reservation reserv;
+			int clientId = Integer.parseInt(login);
 			try {
-				reserv = reservationDAO.findClient(idClient);
+				
+				Client clientCo = clientDAO.find(clientId);
+				result = controlReservation.CheckDate(clientCo.getBirthDate());
+				System.out.println(result);
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			try {
+				Reservation reserv;
+				reserv = reservationDAO.findClient(clientId);
 				startDateReserv = reserv.getStartDate();
 				endDateReserv = reserv.getEndDate();
-				System.out.println(startDateReserv);
-				System.out.println(endDateReserv);
-				
-				result = controlReservation.checkValReserv(newEndDateReserv, newStartDateReserv,
+				resultCheckReserv = controlReservation.checkValReserv(newEndDateReserv, newStartDateReserv,
 						startDateReserv, endDateReserv);
-				System.out.println(result);
 				request.setAttribute("login", login);
 				String startDate1 = request.getParameter("startDate");
 				request.setAttribute("startDate", startDate1);
 				request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
+			
 
 			} catch (SQLException e) {
 				e.printStackTrace();

@@ -67,5 +67,15 @@ public class CarDAO extends DAO<Car>{
 		}
 		return cars;
 	}
+	
+	public List<Car> findByCv(int cv ) throws SQLException{
+		ArrayList<Car> cars = new ArrayList<Car>();
+		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM car WHERE cv <" + cv);
+		while(result.next()){
+			Car car = new Car(result.getInt("id"),result.getString("brand"), result.getString("model"), result.getString("plateNumber"), result.getString("color"), result.getInt("cv"),result.getInt("kms"),result.getDouble("price"));
+			cars.add(car);
+		}
+		return cars;
+	}
 
 }

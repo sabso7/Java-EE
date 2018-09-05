@@ -25,7 +25,7 @@ public class ControlReservation {
 	}
 	
 	
-	public boolean CheckDate(Date birthDate, Date dValid) {
+	public boolean CheckDate(Date birthDate) {
 		Date currentDate = new Date();
 		Calendar birthCalendar = Calendar.getInstance();
 		birthCalendar.setTime(birthDate);

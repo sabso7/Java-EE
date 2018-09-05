@@ -57,7 +57,7 @@ public class CarDAO extends DAO<Car>{
 				
 				Car car = new Car(result.getInt("id"),result.getString("brand"), result.getString("model"), 
 						result.getString("plateNumber"), result.getString("color"), result.getInt("cv"),
-						result.getInt("kms"),result.getDouble("price"));
+						result.getDouble("kms"),result.getDouble("price"));
 				
 				cars.put(car.getInfos());
 			}
@@ -77,5 +77,14 @@ public class CarDAO extends DAO<Car>{
 		}
 		return cars;
 	}
-
+	
+	public Car findById(int idCar ) throws SQLException{
+	Car car = null;
+		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM car WHERE id = " + idCar);
+	if(result.first())	{
+		car = new Car(result.getInt("id"),result.getString("brand"), result.getString("model"), result.getString("plateNumber"), 
+				result.getString("color"), result.getInt("cv"),result.getDouble("kms"),result.getDouble("price"));
+	}
+		return car;
+	}
 }

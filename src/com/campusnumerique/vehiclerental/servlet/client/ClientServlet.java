@@ -24,7 +24,7 @@ import com.campusnumerique.vehiclerental.entity.Client;
 @WebServlet("/ClientServlet")
 public class ClientServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ClientDAO clientDAO = null; 
+	private ClientDAO clientDAO = null;
 
 	/**
 	 * @throws ClassNotFoundException
@@ -32,15 +32,15 @@ public class ClientServlet extends HttpServlet {
 	 */
 	public ClientServlet() throws ClassNotFoundException {
 		super();
-		clientDAO = new ClientDAO(); 
+		clientDAO = new ClientDAO();
 	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	
-	// METHODE doGet 
+
+	// METHODE doGet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -66,10 +66,14 @@ public class ClientServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
-
-		String login = request.getParameter("login");		
-		request.setAttribute("login", login);
-		request.getRequestDispatcher("./reservation.jsp").forward(request, response);
+	String	rent = request.getParameter("login");
+		
+if(rent != null){
+	String login = request.getParameter("login");		
+	request.setAttribute("login", login);
+	request.getRequestDispatcher("./reservation.jsp").forward(request, response);
+}
+		
 				
 	}
 

@@ -1,5 +1,6 @@
 package com.campusnumerique.vehiclerental.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,8 +22,12 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public boolean delete(Reservation obj) {
-		// TODO Auto-generated method stub
-		return false;
+			
+		
+		
+		
+		
+		return true;
 	}
 
 	@Override
@@ -58,5 +63,26 @@ public class ReservationDAO extends DAO<Reservation> {
 		reserv = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
 					result.getDate("startDate"),result.getDate("endDate"),result.getDouble("price"));
 		return reserv;	
+	}
+	
+	public boolean saveReserv(Reservation newReservation){
+		String msg ="bien enregistré";
+		try {
+			PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO reservation(clientReserv,carReserv,startDate,endDate,price) VALUES (?,?,?,?,?) ");
+			java.sql.Date sqlStartDate = new java.sql.Date(newReservation.getStartDate().getTime());
+			java.sql.Date sqlEndDate = new java.sql.Date(newReservation.getEndDate().getTime());
+			
+			preparedStatement.setInt(1, newReservation.getClient());
+			preparedStatement.setInt(2, newReservation.getCar());
+			preparedStatement.setDate(3, sqlStartDate);
+			preparedStatement.setDate(4, sqlEndDate);
+			preparedStatement.setDouble(5, newReservation.getPrice());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 }

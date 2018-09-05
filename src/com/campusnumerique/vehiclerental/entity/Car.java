@@ -1,19 +1,25 @@
 package com.campusnumerique.vehiclerental.entity;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class Car {
+public class Car implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id=0;
 	private String brand="";
 	private String model="";
 	private String plateNumber="";
 	private double price= 0;
-	private int kms = 0;
+	private double kms = 0;
 	private int cv = 0;
 	private String color="";
 	
-	public Car(int id, String brand, String model, String plateNumber, String color , int kms , int cv,double price ){
+	public Car(int id, String brand, String model, String plateNumber, String color , int cv ,double kms ,double price ){
 		setId(id);
 		setBrand(brand);
 		setModel(model);
@@ -62,11 +68,11 @@ public class Car {
 		return getInfos().toString();
 	}
 
-	public int getKms() {
+	public double getKms() {
 		return kms;
 	}
 
-	public void setKms(int kms) {
+	public void setKms(double kms) {
 		this.kms = kms;
 	}
 

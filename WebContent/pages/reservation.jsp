@@ -23,51 +23,50 @@
 
 <form method ="post">
 
-   <div>
-        <label for="startDate">Start</label>
-        <input type="Date" name="startDate" id="startDate" />
-    </div>
-
-    <div>
-        <label for="endDate">End</label>
-        <input type="Date" name="endDate" id="endDate"  >
-    </div>
-    
     <label >Véhicules libres</label>
                 
-                <select type="car" class="form-control" required autofocus id="car" name="car" >    
+              <select type="car" class="form-control" required autofocus id="car" name="car" >    
                 	<c:forEach   items="${cars}" var="car">
-                		<option value="${car.brand} ${car.model}">${car.brand} ${car.model}</option>
+                		<option value="${car.id}">${car.brand} ${car.model}</option>
 					</c:forEach> 
-				</select>
+				</select>  
 				
-				<input type="submit" />
-
 			
-				
-	<div><c:out value ="vous avez selectionné le véhicule suivant : ${car.brand} ${car.model} ${car.price}"/><br>
-		 <c:out value ="son prix au kilomètre est : ${car.kms}, son prix de location est de : ${car.price}"/>
-	</div>			
-	<div> 
 		<label for="TotalPrice">Estimez votre kilométrage</label>
-		<input type="number" name="kilometer" id="kilometer" />	<br>
-		<c:out value="Vous optez pour : ${Kilometer} kilomètres"/>
-	</div>
+		<input type="number" name="kilometer" id="kilometer" required autofocus class="form-control"/>	<br>
 	
-	<div>
-		<c:out value ="Prix : ${car.brand} ${car.model} ${car.price}"/><br>
-		<c:out value ="son prix au kilomètre est : ${kms.price}"/>
-	</div>
-	
-	
-
 				
-				<c:out value="${param.date}"/>
-				<c:out value="${param.date}"/>
+				<input type="submit" name="valid" />
+				<input type="submit" name="save" value="save"/>
+	</form>
+</fieldset>	
+
+<p>
+
+Le prix de la location est de : <br>
+
+<c:out value="${finalPrice}"/></p>
 
 
-</form>
-</fieldset>
+
+	
+				
+<%-- 	<div><c:out value ="vous avez selectionné le véhicule suivant : ${car.brand} ${car.model} ${car.price}"/><br> --%>
+<%-- 		 <c:out value ="son prix au kilomètre est : ${car.kms}, son prix de location est de : ${car.price}"/> --%>
+<!-- 	</div>			 -->
+<!-- 	<div>  -->
+<!-- 		<label for="TotalPrice">Estimez votre kilométrage</label> -->
+<!-- 		<input type="number" name="kilometer" id="kilometer" />	<br> -->
+<%-- 		<c:out value="Vous optez pour : ${Kilometer} kilomètres"/> --%>
+<!-- 	</div> -->
+	
+<!-- 	<div> -->
+<%-- 		<c:out value ="Prix : ${car.brand} ${car.model} ${car.price}"/><br> --%>
+<%-- 		<c:out value ="son prix au kilomètre est : ${kms.price}"/> --%>
+<!-- 	</div> -->
+	
+
+
 
 
 </body>

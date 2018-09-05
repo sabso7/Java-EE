@@ -43,20 +43,62 @@ public class ReservationServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Car> cars;
+
+		SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date newStartDateReserv;
+		Date newEndDateReserv;
+		Date startDateReserv;
+		Date endDateReserv;
+		boolean resultCheckReserv;
+		List<Car> result;
+
 		try {
-			cars = carDAO.findAll();
-			request.setAttribute("cars", cars);
+
+			// on récupère les info du client
 			String login = request.getParameter("login");
 			int idClient = Integer.parseInt(login);
-			System.out.println(idClient);
 			Client clientCo = clientDAO.find(idClient);
-			System.out.println(clientCo);
 			request.setAttribute("client", clientCo);
 			request.getSession().setAttribute("login", login);
+
+			// on récupère les dates de réservation
+
+			try {
+				newStartDateReserv = sdp.parse(request.getParameter("startDate"));
+				sdf.format(newStartDateReserv);
+				request.getSession().setAttribute("startDate", newStartDateReserv);
+				newEndDateReserv = sdp.parse(request.getParameter("endDate"));
+				sdf.format(newEndDateReserv);
+				request.getSession().setAttribute("endDate", newEndDateReserv);
+				Reservation reserv;
+
+				// on regarde si le client a déja une reservation
+
+				reserv = reservationDAO.findClient(idClient);
+
+				// si il a une réservation on check pour que cela ne tombe pas
+				// en meme temps que la nouvelle.
+
+				if (reserv != null) {
+					startDateReserv = reserv.getStartDate();
+					endDateReserv = reserv.getEndDate();
+					resultCheckReserv = controlReservation.checkValReserv(newEndDateReserv, newStartDateReserv,
+							startDateReserv, endDateReserv);
+				}
+
+				// si il c'est bon , on check son age et on retourne les
+				// voitures correspondantes
+
+				result = controlReservation.CheckDate(clientCo.getBirthDate());
+				request.setAttribute("cars", result);
+				request.getSession().setAttribute("cars", result);
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -68,48 +110,76 @@ public class ReservationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String resultCar;
+		String resultKm;
+		String show = request.getParameter("valid");
+		String save = request.getParameter("save");
 		SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date newStartDateReserv;
-		Date newEndDateReserv;
-		Date startDateReserv;
-		Date endDateReserv;
-		boolean result;
-		int idClient;
+		resultCar = request.getParameter("car");
+		int idCar = Integer.parseInt(resultCar);
+		resultKm = request.getParameter("kilometer");
+		int km = Integer.parseInt(resultKm);
+		System.out.println(km);
+		String login = request.getParameter("login");
+		int idClient = Integer.parseInt(login);
 
-		try {
-			newStartDateReserv = sdp.parse(request.getParameter("startDate"));
-			sdf.format(newStartDateReserv);
-			newEndDateReserv = sdp.parse(request.getParameter("endDate"));
-			sdf.format(newEndDateReserv);
-			String car = request.getParameter("car");
-			String login = request.getParameter("login");
-			idClient = Integer.parseInt(login);
-			System.out.println(idClient);
-			Reservation reserv;
+		// on récupère la voiture et les kilometer choisie
+
+		if (show != null && save == null) {
+
 			try {
-				reserv = reservationDAO.findClient(idClient);
-				startDateReserv = reserv.getStartDate();
-				endDateReserv = reserv.getEndDate();
-				System.out.println(startDateReserv);
-				System.out.println(endDateReserv);
-				
-				result = controlReservation.checkValReserv(newEndDateReserv, newStartDateReserv,
-						startDateReserv, endDateReserv);
-				System.out.println(result);
-				request.setAttribute("login", login);
-				String startDate1 = request.getParameter("startDate");
-				request.setAttribute("startDate", startDate1);
-				request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
-
+				Double finalPrice;
+				Car car = carDAO.findById(idCar);
+				double kms = car.getKms();
+				System.out.println(kms);
+				double price = car.getPrice();
+				System.out.println(price);
+				double kilometerPrice = kms * km;
+				System.out.println(kilometerPrice);
+				finalPrice = kilometerPrice + price;
+				System.out.println(finalPrice);
+				request.setAttribute("finalPrice", finalPrice);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
+		} else if (show == null && save != null) {
+			Date startDate;
+			Date endDate;
+			Double finalPrice = null;
+			Car car;
+			try {
+				try {
+					car = carDAO.findById(idCar);
+					double kms = car.getKms();
+					System.out.println(kms);
+					double price = car.getPrice();
+					System.out.println(price);
+					double kilometerPrice = kms * km;
+					System.out.println(kilometerPrice);
+					finalPrice = kilometerPrice + price;
+					System.out.println(finalPrice);
+					request.setAttribute("finalPrice", finalPrice);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				startDate = sdp.parse(request.getParameter("startDate"));
+				sdf.format(startDate);
+				endDate = sdp.parse(request.getParameter("endDate"));
+				sdf.format(endDate);
+				Reservation newReservation = new Reservation(0, idClient, idCar, startDate, endDate, finalPrice);
+				System.out.println(newReservation);
+				boolean saveReserv = reservationDAO.saveReserv(newReservation);
+				String msg = "Vous avez bien réservé !";
+				request.setAttribute("msgReservation", msg);
+				request.getRequestDispatcher("./clients").forward(request, response);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-
 	}
 }

@@ -7,6 +7,18 @@
 	<%@ include file="BarreNav.jsp"%>
 	<div class="container" id="content">
 		<div class="row">
+		
+		
+		
+		<c:if test="${msgReservation != null }">
+		
+		<h2 style="color:green"><c:out value="${msgReservation}" /></h2>
+		
+		
+		</c:if>
+		
+		
+		<br>
 			<h2>Client List</h2>
 			<table id="userTable" class="table table-striped">
 				<thead>
@@ -15,29 +27,36 @@
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Reservation</th>
-						
+
 					</tr>
 				</thead>
-
+				<tbody>
 					<c:forEach items="${clients}" var="client">
-						<tbody>
-							<tr>
+						<tr>
 							<td><c:out value="${ client.id}" /></td>
-								<td><c:out value="${ client.login }" /></td>
-								<td><c:out value="${ client.firstName }" /></td>
-								<td><c:out value="${ client.lastName }" /></td>
-								<td><c:out value="${ client.mail }" /></td>
-								
-								<td><form action="./reservation" method="get">
-									<input type="hidden"  value="${ client.id }"  id="login" name="login"/>
+							<td><c:out value="${ client.login }" /></td>
+							<td><c:out value="${ client.firstName }" /></td>
+							<td><c:out value="${ client.lastName }" /></td>
+							<td><c:out value="${ client.mail }" /></td>
+							<td>
+								<form action="./reservation" method="get">
+									<div>
+										<label for="startDate">Start</label> <input type="Date"
+											name="startDate" id="startDate" required />
+									</div>
+									<div>
+										<label for="endDate">End</label> <input type="Date"
+											name="endDate" id="endDate">
+									</div>
+									<input type="hidden" value="${ client.id }" id="login"
+										name="login" required />
 									<button>Rental</button>
 								</form>
-								</td>
-							</tr>
-						</tbody>
+							</td>
+						</tr>
 					</c:forEach>
+				</tbody>
 
-				
 			</table>
 		</div>
 	</div>

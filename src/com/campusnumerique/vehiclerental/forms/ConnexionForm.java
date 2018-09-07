@@ -1,30 +1,32 @@
 package com.campusnumerique.vehiclerental.forms;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-public class ConnexionForm {
+import com.campusnumerique.vehiclerental.dao.ClientDAO;
+import com.campusnumerique.vehiclerental.entity.Car;
+import com.campusnumerique.vehiclerental.entity.Client;
+
+public class ConnexionForm  extends HttpServlet{
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String resultat="";
+	private String connectClient;
 
 	public void verifIdentifiants(HttpServletRequest request){
 		
-		String login =request.getParameter("login");
-		request.setAttribute("login", login);
-		
-
-		String pass =request.getParameter("pass");
-		request.setAttribute("pass", pass);
-		
-		
-		if(pass.equals  ("abc")){
-			
-			resultat ="Vous êtes bien connecté !";
-		}else{
-			
-		resultat ="Identifiants incorrectes";
-		}
+		String pseudo =request.getParameter("pseudo");
+		request.setAttribute("pseudo", pseudo);
+		String password =request.getParameter("password");
+		request.setAttribute("password", password);	
 	}
 		
-	
 	public String getResultat() {
 		return resultat;
 	}
@@ -34,3 +36,4 @@ public class ConnexionForm {
 	}
 	
 }
+  

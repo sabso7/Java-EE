@@ -15,15 +15,25 @@ public class Client {
 	private Date birthDate;
 	private String numPermis="";
 	private Date datePermis;
-	
+	private boolean agent;
 	private boolean isGuest=false;
+	
+	
+	public Boolean getAgent() {
+		return agent;
+	}
+
+	public void setAgent(Boolean agent) {
+		this.agent = agent;		
+	}
+
 	
 	public Client(){
 		setLogin("guest");
 		setGuest(true);
 	}
 	
-	public Client(int id, String login, String firstName, String lastName, String mail, String password, Date birthDate, String numPermis, Date datePermis){
+	public Client(int id, String login, String firstName, String lastName, String mail, String password, Date birthDate, String numPermis, Date datePermis, Boolean agent){
 		setId(id);
 		setLogin(login);  
 		setFirstName(firstName);
@@ -33,6 +43,7 @@ public class Client {
 		setBirthDate(birthDate);
 		setNumPermis(numPermis);
 		setDatePermis(datePermis);
+		setAgent(agent);
 		setGuest(false);
 	}
 	
@@ -42,6 +53,8 @@ public class Client {
 	public void setLogin(String login) {
 		if(login!=null && !login.equals(""))
 			this.login = login;
+		
+		
 	}
 	public String getPassword() {
 		return password;
@@ -122,6 +135,7 @@ public class Client {
 		infos.put("birthDate", birthDate);
 		infos.put("numPermis", numPermis);
 		infos.put("datePermis", datePermis);
+		infos.put("agent", agent);
 		
 		
 		return infos;

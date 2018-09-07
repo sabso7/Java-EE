@@ -13,12 +13,12 @@
 
 <form method="post" action="./connexion">
 <p>
-<label for="login">Login :</label>
-<input type="text" name="login" id="login" class="form-control" required />
+<label for="pseudo">Login :</label>
+<input type="text" name="pseudo" id="pseudo" class="form-control" required />
 </p>
 <p>
-<label for="pass">Password :</label>
-<input type="password" name="pass" id="pass" class="form-control" required />
+<label for="password">Password :</label>
+<input type="password" name="password" id="password" class="form-control" required />
 </p>
 	<input type="submit" />
 

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.campusnumerique.vehiclerental.control.ControlReservation;
 import com.campusnumerique.vehiclerental.dao.CarDAO;
@@ -56,21 +57,22 @@ public class ReservationServlet extends HttpServlet {
 		try {
 
 			// on récupère les info du client
-			String login = request.getParameter("login");
+			String login = request.getParameter("goRent");
 			int idClient = Integer.parseInt(login);
 			Client clientCo = clientDAO.find(idClient);
-			request.setAttribute("client", clientCo);
-			request.getSession().setAttribute("login", login);
+		HttpSession session = request.getSession();
+		session.setAttribute("clientCo", clientCo);
+			System.out.println(clientCo);
 
 			// on récupère les dates de réservation
 
 			try {
 				newStartDateReserv = sdp.parse(request.getParameter("startDate"));
 				sdf.format(newStartDateReserv);
-				request.getSession().setAttribute("startDate", newStartDateReserv);
+				session.setAttribute("startDate", newStartDateReserv);
 				newEndDateReserv = sdp.parse(request.getParameter("endDate"));
 				sdf.format(newEndDateReserv);
-				request.getSession().setAttribute("endDate", newEndDateReserv);
+				session.setAttribute("endDate", newEndDateReserv);
 				Reservation reserv;
 
 				// on regarde si le client a déja une reservation
@@ -109,77 +111,73 @@ public class ReservationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		String resultCar;
-		String resultKm;
+		HttpSession session = request.getSession(false);
 		String show = request.getParameter("valid");
 		String save = request.getParameter("save");
-		SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		resultCar = request.getParameter("car");
-		int idCar = Integer.parseInt(resultCar);
-		resultKm = request.getParameter("kilometer");
-		int km = Integer.parseInt(resultKm);
-		System.out.println(km);
-		String login = request.getParameter("login");
-		int idClient = Integer.parseInt(login);
+		System.out.println(show);
+		System.out.println(save);
 
-		// on récupère la voiture et les kilometer choisie
+		if (save == null && show == null) {
+			doGet(request, response);
+			return;
 
-		if (show != null && save == null) {
+		} else {
 
-			try {
-				Double finalPrice;
-				Car car = carDAO.findById(idCar);
-				double kms = car.getKms();
-				System.out.println(kms);
-				double price = car.getPrice();
-				System.out.println(price);
-				double kilometerPrice = kms * km;
-				System.out.println(kilometerPrice);
-				finalPrice = kilometerPrice + price;
-				System.out.println(finalPrice);
-				request.setAttribute("finalPrice", finalPrice);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
-		} else if (show == null && save != null) {
-			Date startDate;
-			Date endDate;
-			Double finalPrice = null;
-			Car car;
-			try {
+			String resultCar;
+			String resultKm;
+			SimpleDateFormat sdp = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			resultCar = request.getParameter("car");
+			int idCar = Integer.parseInt(resultCar);
+			resultKm = request.getParameter("kilometer");
+			int km = Integer.parseInt(resultKm);
+			Client login = (Client) session.getAttribute("clientCo");
+			int idClient = login.getId();
+			System.out.println("hello dopost");
+			System.out.println(login);
+			System.out.println(idClient);
+			
+
+			if (show != null && save == null) {
+
+				try {
+					Double finalPrice;
+					Car car = carDAO.findById(idCar);
+					double kms = car.getKms();
+					double price = car.getPrice();
+					double kilometerPrice = kms * km;
+					finalPrice = kilometerPrice + price;
+					request.setAttribute("finalPrice", finalPrice);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				request.getRequestDispatcher("pages/reservation.jsp").forward(request, response);
+			} else if (show == null && save != null) {
+				Date newStartDate;
+				Date newEndDate;
+				Double finalPrice = null;
+				Car car;
 				try {
 					car = carDAO.findById(idCar);
 					double kms = car.getKms();
-					System.out.println(kms);
 					double price = car.getPrice();
-					System.out.println(price);
 					double kilometerPrice = kms * km;
-					System.out.println(kilometerPrice);
 					finalPrice = kilometerPrice + price;
-					System.out.println(finalPrice);
 					request.setAttribute("finalPrice", finalPrice);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				startDate = sdp.parse(request.getParameter("startDate"));
-				sdf.format(startDate);
-				endDate = sdp.parse(request.getParameter("endDate"));
-				sdf.format(endDate);
-				Reservation newReservation = new Reservation(0, idClient, idCar, startDate, endDate, finalPrice);
-				System.out.println(newReservation);
+				System.out.println("hello save");
+				newStartDate = (Date) session.getAttribute("startdate");
+				newEndDate = (Date) session.getAttribute("endDate");
+				
+				Reservation newReservation = new Reservation(0, idClient, idCar, newStartDate, newEndDate, finalPrice);
 				boolean saveReserv = reservationDAO.saveReserv(newReservation);
 				String msg = "Vous avez bien réservé !";
 				request.setAttribute("msgReservation", msg);
 				request.getRequestDispatcher("./clients").forward(request, response);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
 		}
 	}
 }

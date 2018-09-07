@@ -3,9 +3,11 @@ package com.campusnumerique.vehiclerental.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 
+import com.campusnumerique.vehiclerental.entity.Car;
 import com.campusnumerique.vehiclerental.entity.Reservation;
 
 public class ReservationDAO extends DAO<Reservation> {
@@ -22,12 +24,8 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public boolean delete(Reservation obj) {
-			
-		
-		
-		
-		
-		return true;
+	
+		return false;
 	}
 
 	@Override
@@ -38,15 +36,20 @@ public class ReservationDAO extends DAO<Reservation> {
 
 	@Override
 	public Reservation find(int id) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<Reservation> findAll() throws SQLException {
-		// TODO Auto-generated method stub
-		
-		return null;
+		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM reservation");
+		while(result.next()){
+			Reservation reservation = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
+					result.getDate("startDate"),result.getDate("endDate"),result.getDouble("price"));
+			reservations.add(reservation);
+		}
+		return reservations;	
 	}
 	
 	public JSONArray findAllAsJson(){
@@ -70,6 +73,8 @@ public class ReservationDAO extends DAO<Reservation> {
 		try {
 			PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO reservation(clientReserv,carReserv,startDate,endDate,price) VALUES (?,?,?,?,?) ");
 			java.sql.Date sqlStartDate = new java.sql.Date(newReservation.getStartDate().getTime());
+			System.out.println("date test");
+			System.out.println(sqlStartDate);
 			java.sql.Date sqlEndDate = new java.sql.Date(newReservation.getEndDate().getTime());
 			
 			preparedStatement.setInt(1, newReservation.getClient());
@@ -85,4 +90,37 @@ public class ReservationDAO extends DAO<Reservation> {
 		
 		return true;
 	}
+	
+	public List<Reservation> findReservByClient(int idClient) throws SQLException {
+		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+		ResultSet result = this.connection.createStatement().executeQuery("SELECT * FROM reservation WHERE client =" + idClient);
+		while(result.next()){
+			Reservation reservation = new Reservation(result.getInt("id"),result.getInt("clientReserv"),result.getInt("carReserv"), 
+					result.getDate("startDate"),result.getDate("endDate"),result.getDouble("price"));
+			reservations.add(reservation);
+		}
+		return reservations;		
+	}
+	
+	public boolean deleteReserv(int idReserv) throws SQLException {
+		ResultSet result;
+		try {
+			PreparedStatement preparedStatement = this.connection.prepareStatement("DELETE FROM reservation WHERE id = ?");
+			preparedStatement.setInt(1, idReserv);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

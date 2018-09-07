@@ -48,7 +48,8 @@ public class ConnexionDAO extends DAO<Client> {
 	public Client checkUserAuth(String password, String login) throws SQLException {
 		Client connectClient = new Client();
 		ResultSet result = this.connection.createStatement()
-				.executeQuery("SELECT * FROM client WHERE login = '" + login + "' AND password = '" + password + "'");
+				.executeQuery("SELECT * FROM client WHERE login = '" + login + "' AND password = MD5 ('" + password +"')");
+		
 		if (result.first())
 			connectClient = new Client(result.getInt("id"), result.getString("login"), result.getString("firstName"),
 					result.getString("lastName"), result.getString("mail"), result.getString("password"),

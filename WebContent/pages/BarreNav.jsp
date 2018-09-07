@@ -36,11 +36,10 @@
 				List</a></li>
 		<li class="nav-item"><a class="nav-link" href="./cars">Car
 				List</a></li>
-<<<<<<< HEAD
-		
-=======
->>>>>>> 158b419568f23e4f72dc72cf5151b9c89a52d72f
-	</ul>
+
+
+
+</ul>
 	<ul class="nav navbar-nav navbar-right">
 		<li>User Connected: <%=client.getLogin()%></li>
 

@@ -87,4 +87,5 @@ public abstract class DAO<T> {
 	  connectionUrl.append(password);
 	  this.connectionUrl=connectionUrl.toString();
   }
+
 }

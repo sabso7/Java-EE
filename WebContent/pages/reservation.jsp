@@ -21,7 +21,7 @@
  </br>
 
 
-<form method ="post">
+<form action="./reservation" method ="post">
 
     <label >Véhicules libres</label>
                 
@@ -36,7 +36,7 @@
 		<input type="number" name="kilometer" id="kilometer" required autofocus class="form-control"/>	<br>
 	
 				
-				<input type="submit" name="valid" />
+				<input type="submit" name="valid" value="show"/>
 				<input type="submit" name="save" value="save"/>
 	</form>
 </fieldset>	

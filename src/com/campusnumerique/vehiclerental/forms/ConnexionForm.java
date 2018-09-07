@@ -5,10 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import com.campusnumerique.vehiclerental.dao.ClientDAO;
-import com.campusnumerique.vehiclerental.entity.Car;
-import com.campusnumerique.vehiclerental.entity.Client;
-
 public class ConnexionForm  extends HttpServlet{
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -25,6 +21,7 @@ public class ConnexionForm  extends HttpServlet{
 		request.setAttribute("pseudo", pseudo);
 		String password =request.getParameter("password");
 		request.setAttribute("password", password);	
+		
 	}
 		
 	public String getResultat() {

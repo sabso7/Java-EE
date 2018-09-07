@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.campusnumerique.vehiclerental.bean.Agent;
 import com.campusnumerique.vehiclerental.dao.ClientDAO;
+import com.campusnumerique.vehiclerental.dao.ConnexionDAO;
 import com.campusnumerique.vehiclerental.entity.Car;
 import com.campusnumerique.vehiclerental.entity.Client;
 
@@ -53,6 +55,12 @@ public class ClientServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Agent agent = new Agent();
+		//agent = ConnexionDAO.checkAgent(agent);
+		agent.setAgentFirstname("coco");
+		agent.setAgentName("rico");
+		agent.setActif(true);
+		request.setAttribute("agent", agent);
 	}
 
 	/**
@@ -64,7 +72,10 @@ public class ClientServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		doGet(request, response);
+		
 		
 	String	rent = request.getParameter("login");
 		

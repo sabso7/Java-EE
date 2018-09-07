@@ -56,5 +56,18 @@ public class ConnexionDAO extends DAO<Client> {
 
 		return connectClient;
 	}
+	public Client checkAgent(String agent)throws SQLException{
+		Client agentClient = new Client();
+		ResultSet result = this.connection.createStatement()
+		.executeQuery("SELECT * FROM client WHERE agent = " + agent );
+		
+		if (result.first())
+			agentClient = new Client(result.getInt("id"), result.getString("login"), result.getString("firstName"),
+					result.getString("lastName"), result.getString("mail"), result.getString("password"),
+					result.getDate("birthDate"), result.getString("numPermis"), result.getDate("datePermis"), result.getBoolean("agent"));
+
+		return agentClient;
+		
+	}
 
 }

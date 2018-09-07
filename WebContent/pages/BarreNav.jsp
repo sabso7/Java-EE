@@ -30,6 +30,8 @@
 		src="resources/images/delorean.png" />
 	</a>
 	<ul class="nav nav-pills">
+		<li class="nav-item"><a class="nav-link" href="./connexion">
+				Login</a></li>
 		<li class="nav-item"><a class="nav-link" href="./clients">Client
 				List</a></li>
 		<li class="nav-item"><a class="nav-link" href="./cars">Car
@@ -37,7 +39,7 @@
 	</ul>
 	<ul class="nav navbar-nav navbar-right">
 		<li>User Connected: <%=client.getLogin()%></li>
-		
+
 	</ul>
 	</nav>
 </html>

@@ -45,7 +45,9 @@ public class ControlReservation extends HttpServlet {
 		return true;
 	}
 
+
 	public List<Car> CheckDate(Date birthDate) {
+
 		Date currentDate = new Date();
 		Calendar birthCalendar = Calendar.getInstance();
 		birthCalendar.setTime(birthDate);
@@ -65,7 +67,6 @@ public class ControlReservation extends HttpServlet {
 			List<Car> cars = new ArrayList<Car>();
 			try {
 				cars = carDAO.findByCv(cv);
-				System.out.println(cars);
 				return cars;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
